@@ -7,7 +7,7 @@ void main (){
 }
 
 class Person {
-  String? name, sex;
+  String name, sex;
   int? age, money;
 
   //constructor
@@ -15,6 +15,10 @@ class Person {
 
   Person(String this.name, String this.sex, int this.age);
 
+  Person.test(this.name, this.sex){
+    this.name = name;
+    this.sex = sex;
+  }
   void showData(){
     print("name = $name");
     print("sex = $sex");
