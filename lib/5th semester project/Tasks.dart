@@ -15,12 +15,15 @@ class Task {
       this.taskDescription,
       this.dueDate,
       this.isDone,
-      this.doesRepeat
+      this.doesRepeat,
       );
 
   Task.test(
       this.taskID,
-      this.taskName
+      this.taskName,
+      this.taskDescription,
+      this.taskPointValue,
+      this.dueDate,
       );
 
 static DateTime setDueDate() {
