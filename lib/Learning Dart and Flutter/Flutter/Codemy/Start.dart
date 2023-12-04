@@ -18,16 +18,23 @@ class MyWidget extends StatelessWidget {
           ),
           backgroundColor: Colors.deepPurple[400],
         ),
-        body: const Center(
+        body: Container(
+          color: Colors.cyan,
+          width: 150,
+          height: 150,
+          child: Text("hello"),
+        ),
+      ),
+    );
+    //return const Placeholder();
+  }
+}/*//https://www.appicon.co/
+Center(
           //child: Image(image: NetworkImage('https://gamersupps.gg/cdn/shop/files/benefits-icons_25ffb80f-2088-4798-8767-380120a8b7fb.png')),
           child: Image(
               image: AssetImage('images/Trigster.png')
           ),
         ),
         backgroundColor: Colors.deepPurple[200],
-      ),
-    );
-    //return const Placeholder();
-  }
-}
+*/
 
