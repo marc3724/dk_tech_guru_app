@@ -3,9 +3,10 @@ void main() {
   //for loop
   int num = 5;
   // https://www.w3schools.com/java/java_for_loop.asp
-  for (int i = num; i >= 1; i--){
+  for (var i = num; i >= 1; i=i-1){
     print(i);
   }
+
 
 
 
