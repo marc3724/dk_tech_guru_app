@@ -1,4 +1,4 @@
-import 'package:dk_tech_guru_app/5th%20semester%20project/Business/Entities/Tasks.dart';
+import 'package:dk_tech_guru_app/5th%20semester%20project/features/Feature_Task/Business/Entities/Tasks.dart';
 
 void main(){
 
@@ -19,8 +19,11 @@ void main(){
   print(fuckThisTask.dueDate);
 
   myTaskList.add(fuckThisTask);
+  print(myTaskList);
   myTaskList.removeAt(1);
-    // task2 has custom values for taskPointValue and doesRepeat, the rest will use default values
+  print(myTaskList);
+
+  // task2 has custom values for taskPointValue and doesRepeat, the rest will use default values
 
  /* List<Task> myList = [myTask,my2ndTask];
 
