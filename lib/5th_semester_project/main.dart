@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'model_view_controller/views/home_page.dart';
-import 'model_view_controller/views/tasks_page.dart';
+
+import 'model_view_controller/views/homepage.dart';
 
 void main() {
   runApp(const MyApp());
