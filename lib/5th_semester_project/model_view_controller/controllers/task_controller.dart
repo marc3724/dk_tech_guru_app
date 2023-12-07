@@ -15,7 +15,7 @@ class TaskController {
     {
       final index = tasks.indexWhere((task) => task.taskID == taskId);
 
-      if (index <= -1) {
+      if (index >= 0) {
         // Use getters and setters to update properties
         if (taskName != null) {
           tasks[index].taskName = taskName;
