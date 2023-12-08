@@ -70,7 +70,7 @@ class _TextInputWidgetState extends State<TextInputWidget> {
     int b;
     return TextField(
       controller: controller,
-      decoration: const InputDecoration(
+      /*decoration: const InputDecoration(
         prefixIcon: Icon(Icons.message),
         labelText: "type a message",
         suffix: IconButton(
@@ -78,7 +78,7 @@ class _TextInputWidgetState extends State<TextInputWidget> {
           splashColor: Colors.blue,
           icon: Icon(Icons.send),
         ),
-      ),
+      ),*/
     );
   }
 }
