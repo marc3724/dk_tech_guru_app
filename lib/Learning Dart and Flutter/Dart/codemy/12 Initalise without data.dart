@@ -18,7 +18,6 @@ class Person {
     this.name = name;
     this.sex = sex;
     this.age = age;
-
   }
 
   void showData(){
