@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="VikingTodo" type="FlutterRunConfigurationType" factoryName="Flutter">
-    <option name="filePath" value="$PROJECT_DIR$/lib/5th_semester_project/model_view_controller/StartMain.dart" />
+    <option name="filePath" value="$PROJECT_DIR$/lib/5th_semester_project/main.dart" />
     <method v="2" />
   </configuration>
 </component>

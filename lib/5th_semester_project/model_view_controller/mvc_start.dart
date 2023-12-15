@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 import 'controllers/group_controller.dart';
 import 'models/group_members.dart';
 import 'models/tasks.dart';
@@ -24,10 +26,16 @@ void main() {
   myTaskController.updateTask(2,taskDescription: "hello bitches");
 
   // Hent og udskriv alle opgaver igen
-  print(myTaskController.getTasks());
+  List<Task> tasks = myTaskController.getTasks();
+  String formattedDate = DateFormat('yyyy-MM-dd').format(tasks[1].dueDate);
+  print('Formatted Date: $formattedDate');
+  String formattedDateTime  = DateFormat('yyyy-MM-dd HH:mm').format(tasks[1].dueDate);
+  print('Formatted Date: $formattedDateTime');
+  print(tasks[1].dueDate);
 
   // Slet en opgave
   //myTaskController.deleteTask(1);
+
 
   // Hent og udskriv alle opgaver efter sletning
   print(myTaskController.getTasks());
