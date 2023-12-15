@@ -1,6 +1,10 @@
+import 'package:dk_tech_guru_app/5th_semester_project/model_view_controller/widgets/todo_tile.dart';
 import 'package:flutter/material.dart';
+import '../Database/task_database.dart';
 import '../controllers/task_controller.dart';
 import '../models/tasks.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
 
 class TaskPage extends StatefulWidget {
   TaskPage({super.key});
@@ -10,8 +14,27 @@ class TaskPage extends StatefulWidget {
 }
 
 class _TaskPageState extends State<TaskPage> {
-  TextEditingController myController = TextEditingController();
+  final _myBox = Hive.box("myBox");
+  ToDoDatabase db = ToDoDatabase();
 
+  @override
+  void initState() {
+    // if this is the 1st time ever openin the app, then create default data
+    if (_myBox.get("TODOLIST") == null) {
+      db.createInitialdata();
+    } else {
+      // there already exists data
+      db.loadData();
+    }
+    super.initState();
+  }
+
+  final _controller = TextEditingController();
+
+
+
+  //TextEditingController myController = TextEditingController();
+  TaskController myTaskController = TaskController();
 
   /*@override
   void initState() {
@@ -19,46 +42,99 @@ class _TaskPageState extends State<TaskPage> {
     taskController = TaskController(); // Initialize the TaskController instance
     myTaskList = taskController.getTasks(); // Call the method on the instance
 
-  }*/
-
+  }
   void getText() {
+    print("build taskpage");
     print(myController.text);
   }
 
-  void getTasks(List<Task> taskList){
-    List<Task> myTaskList = taskList;
+  void getTasks(List<Task> taskList) {
+    List<Task> myTaskList = TaskController().getTasks();
   }
+
   //a list for saving Tasks
-
   //List<Task> taskList = TaskController.getTasks().cast<Task>();
-
-  /*void generateTaskFromList(List<Task> list){
+  // void generateTaskFromList(List<Task> list){
     for (int i = 0; i < list.length; i++) {
-
-
 
     }
   }*/
+//todo implement this in createNewTask
+  void saveNewTask(Task task){
+    setState(() {
+      db.myTaskList.add([Task.defaultConstructor(
+          task.taskID,
+          task.taskPointValue,
+          task.taskName,
+          task.taskDescription,
+          task.dueDate,
+          task.isDone,
+          task.doesRepeat
+      ),
+      ] as Task);
+      //_controller.clear();
+    });
+    Navigator.of(context).pop();
+    db.updateDatabase();
+  }
 
+
+/* todo implement this in the floation action button
+  //create a new Task
+  void createNewTask(){
+    showDialog(
+        context: context,
+        builder: (context){
+          return DialogBox(
+            controller: _controller,
+            onSave: saveNewTask,
+            onCancel: () => Navigator.of(context).pop(),
+          );
+        }
+    );
+  }
+*/
+
+
+  void checkBoxChanged(Task task) {
+    setState(() {
+      task.isDone = !task.isDone;
+    });
+  }
+
+  void deleteTask(Task task) {
+    setState(() {
+      myTaskController.deleteTask(task.taskID);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    TaskController myTaskController = TaskController();
-    myTaskController.createTask(1, 10, 'Task 1', 'Description 1', DateTime.now(), false, true);
+    print("here we build taskpage and we will keep building it again and again");
+
 
     //Task task2 = Task.defaultConstructor(2, 15, 'Task 2', 'Description 2', DateTime.now(), false, true);
-    myTaskController.createTask(2, 15, 'Task 2', 'Description 2', DateTime.now(), false, true);
-    List myTaskList = myTaskController.getTasks();
-    
+
+
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text("ToDo App"),
         backgroundColor: Colors.lightGreenAccent,
       ),
+
+      //TODO implement missing function "createNewTask" make sure everything works
+      /*floatingActionButton: FloatingActionButton(
+        onPressed: createNewTask,
+        child: Icon(Icons.add),
+      ),*/
+
+      //body
       body: Column(
         children: [
           //
           Container(
+
             color: Colors.lightBlueAccent,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -71,25 +147,23 @@ class _TaskPageState extends State<TaskPage> {
               ],
             ),
           ),
-          //TODO write about this in the rapport
-          Expanded(
-            child: ListView.builder(
-              itemCount: myTaskList.length,
-              itemBuilder: (context, index) {
-                Task task = myTaskList[index];
-                return Container(
-                  color: Colors.lightBlueAccent,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(task.taskName),
-                      Text(task.taskDescription),
-                      Text(task.taskPointValue.toString()),
-                      Text(task.dueDate.toString()),
+          //TODO create check for if there is space for the description and then show it depending if there is
 
-                      // Add more Text widgets based on task properties
-                    ],
-                  ),
+          Expanded(
+            //TODO write about this in the rapport
+            child: ListView.builder(
+              itemCount: db.myTaskList.length,
+              itemBuilder: (context, index) {
+                Task task = db.myTaskList[index];
+                return ToDoTile(
+                  taskName: task.taskName,
+                  taskCompleted: task.isDone,
+                  dueDate: task.dueDate,
+                  //TODO call method for changing duedate to string and limit it to date only unless its the date then include time
+                  taskDescription: task.taskDescription,
+                  taskPointValue: task.taskPointValue,
+                  onChanged: (value) => checkBoxChanged(task),
+                  deleteFunction: (context) => deleteTask(task),
                 );
               },
             ),
