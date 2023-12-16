@@ -20,7 +20,6 @@ class Reward {
       })  : _rewardPointValue = rewardPointValue,
         _rewardDescription = rewardDescription,
         _isBought = isBought;
-  }
 
   bool get isBought => _isBought;
   set isBought(bool value) {
