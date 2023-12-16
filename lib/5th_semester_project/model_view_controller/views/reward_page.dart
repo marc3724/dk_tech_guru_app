@@ -34,7 +34,7 @@ class _RewardPageState extends State<RewardPage> {
 
 
   //TextEditingController myController = TextEditingController();
-  RewardController myTaskController = RewardController();
+  RewardController myRewardController = RewardController();
 
 
 //todo implement this in createNewReward
