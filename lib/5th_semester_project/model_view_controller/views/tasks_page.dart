@@ -5,6 +5,7 @@ import '../controllers/task_controller.dart';
 import '../models/tasks.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import '../widgets/dialog_box.dart';
 
 class TaskPage extends StatefulWidget {
   TaskPage({super.key});
@@ -15,7 +16,13 @@ class TaskPage extends StatefulWidget {
 
 class _TaskPageState extends State<TaskPage> {
   final _myBox = Hive.box("myBox");
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
+  final TextEditingController pointValueController = TextEditingController();
+  final TextEditingController dueDateController = TextEditingController();
+
   ToDoDatabase db = ToDoDatabase();
+
 
   @override
   void initState() {
@@ -30,8 +37,6 @@ class _TaskPageState extends State<TaskPage> {
   }
 
   final _controller = TextEditingController();
-
-
 
   //TextEditingController myController = TextEditingController();
   TaskController myTaskController = TaskController();
@@ -59,18 +64,18 @@ class _TaskPageState extends State<TaskPage> {
 
     }
   }*/
-//todo implement this in createNewTask
-  void saveNewTask(Task task){
+//todo move to controller and make use of Tasks instead of var
+  void saveNewTask(Task task) {
     setState(() {
-      db.myTaskList.add([Task.defaultConstructor(
-          task.taskID,
-          task.taskPointValue,
-          task.taskName,
-          task.taskDescription,
-          task.dueDate,
-          task.isDone,
-          task.doesRepeat
-      ),
+      db.myTaskList.add([
+        Task.defaultConstructor(
+            task.taskID,
+            task.taskPointValue,
+            task.taskName,
+            task.taskDescription,
+            task.dueDate,
+            task.isDone,
+            task.doesRepeat),
       ] as Task);
       //_controller.clear();
     });
@@ -78,30 +83,43 @@ class _TaskPageState extends State<TaskPage> {
     db.updateDatabase();
   }
 
-
-/* todo implement this in the floation action button
+//todo move to controller and make use of Tasks instead of var
   //create a new Task
-  void createNewTask(){
+  void createNewTask() {
     showDialog(
         context: context,
-        builder: (context){
+        builder: (context) {
           return DialogBox(
-            controller: _controller,
-            onSave: saveNewTask,
+            onSave: () {
+              // Get user input
+              String taskName = _controller.text;
+              String taskDescription = descriptionController.text;
+              int taskPointValue = int.tryParse(pointValueController.text) ?? 0;
+              // todo You might want to use a date picker for better user experience
+              DateTime dueDate = DateTime.parse(dueDateController.text);
+
+              // Create Task
+              Task newTask = Task.defaultConstructor(3, taskPointValue, taskName, taskDescription, dueDate, false, false); // Default doesRepeat value
+
+
+              // Save the new task
+              saveNewTask(newTask);
+              // Close the dialog
+              Navigator.of(context).pop();
+            },
+
+            //controller: _controller,
             onCancel: () => Navigator.of(context).pop(),
           );
-        }
-    );
+        });
   }
-*/
-
 
   void checkBoxChanged(Task task) {
     setState(() {
       task.isDone = !task.isDone;
     });
   }
-
+//todo move to controller and make use of Tasks instead of var
   void deleteTask(Task task) {
     setState(() {
       myTaskController.deleteTask(task.taskID);
@@ -110,11 +128,10 @@ class _TaskPageState extends State<TaskPage> {
 
   @override
   Widget build(BuildContext context) {
-    print("here we build taskpage and we will keep building it again and again");
-
+    print(
+        "here we build taskpage and we will keep building it again and again");
 
     //Task task2 = Task.defaultConstructor(2, 15, 'Task 2', 'Description 2', DateTime.now(), false, true);
-
 
     return Scaffold(
       appBar: AppBar(
@@ -124,17 +141,16 @@ class _TaskPageState extends State<TaskPage> {
       ),
 
       //TODO implement missing function "createNewTask" make sure everything works
-      /*floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         onPressed: createNewTask,
         child: Icon(Icons.add),
-      ),*/
+      ),
 
       //body
       body: Column(
         children: [
           //
           Container(
-
             color: Colors.lightBlueAccent,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
