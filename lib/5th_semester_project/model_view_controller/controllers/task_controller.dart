@@ -1,9 +1,10 @@
-import 'dart:math';
-
-import '../models/tasks.dart';
+import '../Database/task_database.dart';
+import '../models/task.dart';
 
 class TaskController {
-  List<Task> listOfTasks = []; // En liste til at gemme opgaver
+  final ToDoDatabase _database = ToDoDatabase();
+
+  //List<Task> listOfTasks = []; // En liste til at gemme opgaver
 
   /*TODO skriv om det i rapporten (old code)
   void createTask(Task task) {
@@ -15,46 +16,102 @@ class TaskController {
   and sent over
   }
   */
-  void createTask(int taskID, int taskPointValue, String taskName, String taskDescription, DateTime dueDate, bool isDone, bool doesRepeat) {
-    Task task = Task.defaultConstructor(taskID, taskPointValue, taskName, taskDescription, dueDate, isDone, doesRepeat);
-    listOfTasks.add(task);
+  void createTask(int taskID,
+      int taskPointValue,
+      String taskName,
+      String taskDescription,
+      DateTime dueDate,
+      bool isDone,
+      bool doesRepeat) {
+    Task task = Task(
+        taskID,
+        taskPointValue,
+        taskName,
+        taskDescription,
+        dueDate,
+        isDone,
+        doesRepeat);
+    _database.addTask(task);
   }
 
-  void updateTask(int taskId, {
+  void updateTask(Task task, {
     String? taskName,
     String? taskDescription,
+    int? pointValue,
     DateTime? dueDate,
   }) {
     {
-      final index = listOfTasks.indexWhere((task) => task.taskID == taskId);
+      // Use getters and setters to update properties
+      if (taskName != null) {
+        task.taskName = taskName;
+      }
 
-      if (index >= 0) {
-        // Use getters and setters to update properties
-        if (taskName != null) {
-          listOfTasks[index].taskName = taskName;
-        }
+      if (taskDescription != null) {
+        task.taskDescription = taskDescription;
+      }
 
-        if (taskDescription != null) {
-          listOfTasks[index].taskDescription = taskDescription;
-        }
+      if (pointValue != null) {
+        task.taskPointValue = pointValue;
+      }
 
-        if (dueDate != null) {
-          listOfTasks[index].dueDate = dueDate;
-        }
+      if (dueDate != null) {
+        task.dueDate = dueDate;
       }
     }
   }
 
+  void toggleTaskDoneStatus(Task task) {
+    print(task.taskName);
+    task.isDone = !task.isDone;
+  }
+
+  void deleteTask(int taskIndex) => _database.deleteTask(taskIndex);
+
+
+  List<Task> getTasks() => _database.loadData();
+}
+  /* normal way of writing it
+  List<Task> getTasks() {
+    return _database.loadData();
+  }
+*/
+
+
+/*import '../Database/task_database.dart';
+import '../models/task.dart';
+
+
+TODO fix this so the controller handles changes such as update happens here but the changes is sent to both the view and database
+
+
+class TaskController {
+  ToDoDatabase _database;
+
+  TaskController(this._database);
+
+  void createTask(int taskID, int taskPointValue, String taskName, String taskDescription, DateTime dueDate, bool isDone, bool doesRepeat) {
+    Task task = Task.defaultConstructor(taskID, taskPointValue, taskName, taskDescription, dueDate, isDone, doesRepeat);
+    _database.addTask(task);
+  }
+
+  void updateTask(int taskId, {String? taskName, String? taskDescription, DateTime? dueDate}) {
+    _database.updateTask(taskId, taskName: taskName, taskDescription: taskDescription, dueDate: dueDate);
+  }
+
+  void toggleTaskDoneStatus(Task task) {
+    _database.toggleTaskDoneStatus(task.taskID);
+  }
+
   void deleteTask(int taskId) {
-    listOfTasks.removeWhere((task) => task.taskID == taskId);
+    _database.deleteTask(taskId);
   }
 
   List<Task> getTasks() {
-    return listOfTasks;
+    return _database.getAllTasks();
   }
-
-
-  Task generateRandomTask() {
+}
+*/
+  /*Task generateRandomTask() {
     Random random = Random();
 
     int taskId = random.nextInt(1000); // Random task ID
@@ -77,4 +134,4 @@ class TaskController {
 
     return randomTask;
   }
-}
+  }*/

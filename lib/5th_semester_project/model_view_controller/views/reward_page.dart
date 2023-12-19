@@ -1,3 +1,4 @@
+/*
 import 'package:dk_tech_guru_app/5th_semester_project/model_view_controller/widgets/todo_tile.dart';
 import 'package:flutter/material.dart';
 import '../Database/reward_database.dart';
@@ -101,7 +102,8 @@ class _RewardPageState extends State<RewardPage> {
           ),
           //TODO create check for if there is space for the description and then show it depending if there is
 
-          Expanded(
+          */
+/*Expanded(
             //TODO write about this in the rapport
             child: ListView.builder(
               itemCount: db.myRewardList.length,
@@ -117,9 +119,11 @@ class _RewardPageState extends State<RewardPage> {
                 );
               },
             ),
-          ),
+          ),*//*
+
         ],
       ),
     );
   }
 }
+*/

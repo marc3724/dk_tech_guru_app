@@ -1,14 +1,13 @@
 import 'package:intl/intl.dart';
-
 import 'controllers/group_controller.dart';
-import 'models/group_members.dart';
-import 'models/tasks.dart';
-import 'models/group.dart';
 import 'controllers/task_controller.dart';
+import 'models/group.dart';
+import 'models/group_members.dart';
+import 'models/task.dart';
 
 void main() {
   TaskController myTaskController = TaskController();
-
+  Task test = Task(1, 10, 'Task 1', 'Description 1', DateTime.now(), false, true);
   //Task task1 = Task.defaultConstructor(1, 10, 'Task 1', 'Description 1', DateTime.now(), false, true);
   myTaskController.createTask(1, 10, 'Task 1', 'Description 1', DateTime.now(), false, true);
 
@@ -22,8 +21,10 @@ void main() {
   print(myTaskController.getTasks());
 
   // Opdater en opgave
-  myTaskController.updateTask(3,taskDescription: "new and updated description");
-  myTaskController.updateTask(2,taskDescription: "hello bitches");
+  myTaskController.updateTask(test, taskName: "new taskname", taskDescription: "new description", dueDate: DateTime.now(),pointValue: 1500);
+  print("this is new $test");
+  myTaskController.updateTask(test,taskDescription: "hello bitches", pointValue: 15);
+  print("this is newest $test");
 
   // Hent og udskriv alle opgaver igen
   List<Task> tasks = myTaskController.getTasks();
