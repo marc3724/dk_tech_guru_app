@@ -2,7 +2,7 @@ import 'package:dk_tech_guru_app/5th_semester_project/model_view_controller/widg
 import 'package:flutter/material.dart';
 import '../Database/task_database.dart';
 import '../controllers/task_controller.dart';
-import '../models/tasks.dart';
+import '../models/task.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../widgets/dialog_box.dart';
@@ -15,7 +15,9 @@ class TaskPage extends StatefulWidget {
 }
 
 class _TaskPageState extends State<TaskPage> {
-  final _myBox = Hive.box("myBox");
+  void testStart() => print("start _taskpage (Taskpage)");
+
+  //final _myBox = Hive.box("myBox");
   final TextEditingController nameController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController pointValueController = TextEditingController();
@@ -26,49 +28,31 @@ class _TaskPageState extends State<TaskPage> {
 
   @override
   void initState() {
+    testStart();
+    print("start initState (Taskpage)");
     // if this is the 1st time ever openin the app, then create default data
-    if (_myBox.get("TODOLIST") == null) {
+    if (db.boxIsEmpty() == true) {
       db.createInitialdata();
     } else {
       // there already exists data
       db.loadData();
+      print("almost end initState (Taskpage)");
+
     }
     super.initState();
-  }
+    print("end initState (Taskpage)");
 
-  final _controller = TextEditingController();
+  }
 
   //TextEditingController myController = TextEditingController();
   TaskController myTaskController = TaskController();
 
-  /*@override
-  void initState() {
-    super.initState();
-    taskController = TaskController(); // Initialize the TaskController instance
-    myTaskList = taskController.getTasks(); // Call the method on the instance
 
-  }
-  void getText() {
-    print("build taskpage");
-    print(myController.text);
-  }
-
-  void getTasks(List<Task> taskList) {
-    List<Task> myTaskList = TaskController().getTasks();
-  }
-
-  //a list for saving Tasks
-  //List<Task> taskList = TaskController.getTasks().cast<Task>();
-  // void generateTaskFromList(List<Task> list){
-    for (int i = 0; i < list.length; i++) {
-
-    }
-  }*/
 //todo move to controller and make use of Tasks instead of var
   void saveNewTask(Task task) {
     setState(() {
-      db.myTaskList.add([
-        Task.defaultConstructor(
+      db.addTask([
+        Task(
             task.taskID,
             task.taskPointValue,
             task.taskName,
@@ -80,7 +64,7 @@ class _TaskPageState extends State<TaskPage> {
       //_controller.clear();
     });
     Navigator.of(context).pop();
-    db.updateDatabase();
+    //db.updateDatabase();
   }
 
 //todo move to controller and make use of Tasks instead of var
@@ -91,15 +75,16 @@ class _TaskPageState extends State<TaskPage> {
         builder: (context) {
           return DialogBox(
             onSave: () {
+
               // Get user input
-              String taskName = _controller.text;
+              String taskName = nameController.text;
               String taskDescription = descriptionController.text;
               int taskPointValue = int.tryParse(pointValueController.text) ?? 0;
               // todo You might want to use a date picker for better user experience
               DateTime dueDate = DateTime.parse(dueDateController.text);
 
-              // Create Task
-              Task newTask = Task.defaultConstructor(3, taskPointValue, taskName, taskDescription, dueDate, false, false); // Default doesRepeat value
+              // Create Task                      db.uniqueID
+              Task newTask = Task(3, taskPointValue, taskName, taskDescription, dueDate, false, false); // Default doesRepeat value
 
 
               // Save the new task
@@ -119,20 +104,16 @@ class _TaskPageState extends State<TaskPage> {
       task.isDone = !task.isDone;
     });
   }
+
 //todo move to controller and make use of Tasks instead of var
-  void deleteTask(Task task) {
+  void deleteTask(int taskIndex) {
     setState(() {
-      myTaskController.deleteTask(task.taskID);
+      myTaskController.deleteTask(taskIndex);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    print(
-        "here we build taskpage and we will keep building it again and again");
-
-    //Task task2 = Task.defaultConstructor(2, 15, 'Task 2', 'Description 2', DateTime.now(), false, true);
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -168,9 +149,9 @@ class _TaskPageState extends State<TaskPage> {
           Expanded(
             //TODO write about this in the rapport
             child: ListView.builder(
-              itemCount: db.myTaskList.length,
+              itemCount: db.loadData().length,
               itemBuilder: (context, index) {
-                Task task = db.myTaskList[index];
+                Task task = db.loadData()[index];
                 return ToDoTile(
                   taskName: task.taskName,
                   taskCompleted: task.isDone,
@@ -179,7 +160,7 @@ class _TaskPageState extends State<TaskPage> {
                   taskDescription: task.taskDescription,
                   taskPointValue: task.taskPointValue,
                   onChanged: (value) => checkBoxChanged(task),
-                  deleteFunction: (context) => deleteTask(task),
+                  deleteFunction: (context) => deleteTask(index),
                 );
               },
             ),
