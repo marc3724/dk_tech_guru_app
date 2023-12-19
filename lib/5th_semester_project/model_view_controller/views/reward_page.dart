@@ -5,7 +5,6 @@ import '../controllers/reward_controller.dart';
 import '../models/rewards.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-
 class RewardPage extends StatefulWidget {
   RewardPage({super.key});
 
