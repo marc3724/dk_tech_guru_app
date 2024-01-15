@@ -17,28 +17,20 @@ class ToDoDatabase {
 
   //run only, the 1st time the app is launched.
 
-  Future <void> createInitialdata() async {
-    addTask(Task(1, 15, 'swipe left 2 delete',
-        'Description 2', DateTime.now(), false, false));
+  Future <void> createInitialData() async {
+    addTask(Task(1, 15, 'swipe left 2 delete', 'Description 1',
+        DateTime.now(), false, false));
 
     addTask(Task(2, 10, 'hold down to edit', 'Description 2',
         DateTime.now(), false, false));
 
-    addTask(Task(3, 100, 'title for task 3', 'Description 2',
-        DateTime.now(), false, false));
-
-    addTask(Task(4, 8, 'im so fucking tired', 'Description 2',
-        DateTime.now(), false, false));
-
-    addTask(Task(5, 5, 'lets start ww3 please UwU', 'Description 2',
+    addTask(Task(3, 85, 'lets get to work', 'Description 3',
         DateTime.now(), false, false));
   }
-
 
   List<Task> loadData() {
     return boxTasks.values.toList();
   }
-
 
  /* Future<void> updateDatabase() async {
     await boxTasks.clear();

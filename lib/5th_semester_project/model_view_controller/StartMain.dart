@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dk_tech_guru_app/5th_semester_project/model_view_controller/views/tasks_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -6,10 +8,15 @@ import 'models/boxes.dart';
 import 'models/task.dart';
 
 void main() async{
-  ToDoDatabase db = ToDoDatabase();
+  /*var variable1;
+  print(variable1);*/
 
   await Hive.initFlutter();
+  ToDoDatabase db = ToDoDatabase();
+  db.initializeDatabase();
   Hive.registerAdapter(TaskAdapter());
+
+
   boxTasks = await Hive.openBox<Task>("myBox");
   Task test = Task(2, 10, 'Task 2', 'please work 2', DateTime.now(), false, true);
 
@@ -23,7 +30,7 @@ void main() async{
   }
   else {
     print("else was used");
-    db.createInitialdata();
+    db.createInitialData();
   }
 
   //db.addTask(Task(1, 15, 'swipe left 2 delete', 'Description 2', DateTime.now(), false, false));

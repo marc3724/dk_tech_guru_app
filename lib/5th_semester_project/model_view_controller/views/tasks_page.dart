@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dk_tech_guru_app/5th_semester_project/model_view_controller/widgets/todo_tile.dart';
 import 'package:flutter/material.dart';
 import '../Database/task_database.dart';
@@ -26,14 +28,27 @@ class _TaskPageState extends State<TaskPage> {
   ToDoDatabase db = ToDoDatabase();
 
 
+
+
+
+
   @override
   void initState() {
+
+    /*final controller  = StreamController<int>();
+    controller.stream.listen((value) {
+      print('Tæller opdateret: $value');
+      // Opdater brugergrænsefladen her (ikke vist i dette enkle eksempel)
+    });
+*/
     testStart();
     print("start initState (Taskpage)");
     // if this is the 1st time ever openin the app, then create default data
     if (db.boxIsEmpty() == true) {
-      db.createInitialdata();
-    } else {
+      db.createInitialData();
+    }
+    //not used
+    else {
       // there already exists data
       db.loadData();
       print("almost end initState (Taskpage)");
@@ -68,7 +83,6 @@ class _TaskPageState extends State<TaskPage> {
   }
 
 //todo move to controller and make use of Tasks instead of var
-  //create a new Task
   void createNewTask() {
     showDialog(
         context: context,
@@ -83,17 +97,13 @@ class _TaskPageState extends State<TaskPage> {
               // todo You might want to use a date picker for better user experience
               DateTime dueDate = DateTime.parse(dueDateController.text);
 
-              // Create Task                      db.uniqueID
+              // Create Task    db.uniqueID
               Task newTask = Task(3, taskPointValue, taskName, taskDescription, dueDate, false, false); // Default doesRepeat value
 
-
-              // Save the new task
               saveNewTask(newTask);
-              // Close the dialog
               Navigator.of(context).pop();
             },
 
-            //controller: _controller,
             onCancel: () => Navigator.of(context).pop(),
           );
         });
@@ -108,7 +118,7 @@ class _TaskPageState extends State<TaskPage> {
 //todo move to controller and make use of Tasks instead of var
   void deleteTask(int taskIndex) {
     setState(() {
-      myTaskController.deleteTask(taskIndex);
+      db.deleteTask(taskIndex);
     });
   }
 
@@ -132,6 +142,7 @@ class _TaskPageState extends State<TaskPage> {
         children: [
           //
           Container(
+
             color: Colors.lightBlueAccent,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -144,10 +155,8 @@ class _TaskPageState extends State<TaskPage> {
               ],
             ),
           ),
-          //TODO create check for if there is space for the description and then show it depending if there is
 
           Expanded(
-            //TODO write about this in the rapport
             child: ListView.builder(
               itemCount: db.loadData().length,
               itemBuilder: (context, index) {
@@ -155,9 +164,14 @@ class _TaskPageState extends State<TaskPage> {
                 return ToDoTile(
                   taskName: task.taskName,
                   taskCompleted: task.isDone,
+
+                  //TODO make a method for changing duedate to string and limit it to the date only
+                  //TODO make a check to the method above and if the date are the same as "today" use time
                   dueDate: task.dueDate,
-                  //TODO call method for changing duedate to string and limit it to date only unless its the date then include time
+
+                  //TODO make a method that checks if there is space for the description.
                   taskDescription: task.taskDescription,
+
                   taskPointValue: task.taskPointValue,
                   onChanged: (value) => checkBoxChanged(task),
                   deleteFunction: (context) => deleteTask(index),

@@ -48,7 +48,7 @@ class ToDoTile extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
           ),
 
-          //start
+          //start of row
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [

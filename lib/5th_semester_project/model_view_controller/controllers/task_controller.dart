@@ -67,7 +67,7 @@ class TaskController {
 
   void deleteTask(int taskIndex) => _database.deleteTask(taskIndex);
 
-
+  //no longer in use
   List<Task> getTasks() => _database.loadData();
 }
   /* normal way of writing it

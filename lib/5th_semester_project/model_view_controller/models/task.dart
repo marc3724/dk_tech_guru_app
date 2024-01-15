@@ -1,9 +1,9 @@
 import 'package:hive/hive.dart';
-
 part 'task.g.dart'; // Generated file
 
 @HiveType(typeId: 2)
 class Task {
+
   @HiveField(0)
   int _taskID;
 
