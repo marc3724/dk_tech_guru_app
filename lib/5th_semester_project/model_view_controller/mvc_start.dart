@@ -6,6 +6,12 @@ import 'models/group_members.dart';
 import 'models/task.dart';
 
 void main() {
+
+
+  //TODO DO NOT USE
+
+
+
   TaskController myTaskController = TaskController();
   Task test = Task(1, 10, 'Task 1', 'Description 1', DateTime.now(), false, true);
   //Task task1 = Task.defaultConstructor(1, 10, 'Task 1', 'Description 1', DateTime.now(), false, true);
@@ -29,6 +35,7 @@ void main() {
   // Hent og udskriv alle opgaver igen
   List<Task> tasks = myTaskController.getTasks();
   String formattedDate = DateFormat('yyyy-MM-dd').format(tasks[1].dueDate);
+
   print('Formatted Date: $formattedDate');
   String formattedDateTime  = DateFormat('yyyy-MM-dd HH:mm').format(tasks[1].dueDate);
   print('Formatted Date: $formattedDateTime');
