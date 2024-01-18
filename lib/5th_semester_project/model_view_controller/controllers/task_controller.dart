@@ -16,13 +16,15 @@ class TaskController {
   and sent over
   }
   */
-  void createTask(int taskID,
+  void createTask(
+      int taskID,
       int taskPointValue,
       String taskName,
       String taskDescription,
       DateTime dueDate,
       bool isDone,
-      bool doesRepeat) {
+      bool doesRepeat
+      ) {
     Task task = Task(
         taskID,
         taskPointValue,
@@ -34,7 +36,9 @@ class TaskController {
     _database.addTask(task);
   }
 
-  void updateTask(Task task, {
+  //fix {}
+  void updateTask(Task task,
+      {
     String? taskName,
     String? taskDescription,
     int? pointValue,

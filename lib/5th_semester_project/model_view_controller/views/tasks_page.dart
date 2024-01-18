@@ -20,16 +20,13 @@ class _TaskPageState extends State<TaskPage> {
   void testStart() => print("start _taskpage (Taskpage)");
 
   //final _myBox = Hive.box("myBox");
-  final TextEditingController nameController = TextEditingController();
+  /*final TextEditingController nameController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController pointValueController = TextEditingController();
-  final TextEditingController dueDateController = TextEditingController();
+  final TextEditingController dueDateController = TextEditingController();*/
 
   ToDoDatabase db = ToDoDatabase();
-
-
-
-
+  TaskController myTaskController = TaskController();
 
 
   @override
@@ -60,13 +57,13 @@ class _TaskPageState extends State<TaskPage> {
   }
 
   //TextEditingController myController = TextEditingController();
-  TaskController myTaskController = TaskController();
 
 
 //todo move to controller and make use of Tasks instead of var
   void saveNewTask(Task task) {
     setState(() {
-      db.addTask([
+      db.addTask(task);
+      /*db.addTask([
         Task(
             task.taskID,
             task.taskPointValue,
@@ -75,12 +72,25 @@ class _TaskPageState extends State<TaskPage> {
             task.dueDate,
             task.isDone,
             task.doesRepeat),
-      ] as Task);
+      ] as Task);*/
       //_controller.clear();
     });
     Navigator.of(context).pop();
     //db.updateDatabase();
   }
+
+  // Define a function to handle data from DialogBox
+  void handleDataFromDialog(
+      String name,
+      String description,
+      int pointValue,
+      DateTime dueDate) {
+    // Do something with the data, e.g., create a new task
+    print("name = $name Datetime = $dueDate");
+    Task newTask = Task(3, pointValue, name, description, dueDate, false, false);
+    saveNewTask(newTask);
+  }
+
 
 //todo move to controller and make use of Tasks instead of var
   void createNewTask() {
@@ -88,30 +98,42 @@ class _TaskPageState extends State<TaskPage> {
         context: context,
         builder: (context) {
           return DialogBox(
-            onSave: () {
-
+            onSave: handleDataFromDialog,
+            /*{
               // Get user input
               String taskName = nameController.text;
+              print(taskName);
+              print(nameController.text);
+
               String taskDescription = descriptionController.text;
               int taskPointValue = int.tryParse(pointValueController.text) ?? 0;
               // todo You might want to use a date picker for better user experience
+              print("date");
+              if(dueDateController.text.length < 1){
+                print("empty");
+              }
+              else {
+                print("date = ${dueDateController.text}");
+              }
               DateTime dueDate = DateTime.parse(dueDateController.text);
+
 
               // Create Task    db.uniqueID
               Task newTask = Task(3, taskPointValue, taskName, taskDescription, dueDate, false, false); // Default doesRepeat value
 
               saveNewTask(newTask);
               Navigator.of(context).pop();
-            },
-
+            },*/
             onCancel: () => Navigator.of(context).pop(),
+            dialogContext: context,
           );
         });
   }
 
   void checkBoxChanged(Task task) {
     setState(() {
-      task.isDone = !task.isDone;
+      myTaskController.toggleTaskDoneStatus(task);
+      //task.isDone = !task.isDone;
     });
   }
 
