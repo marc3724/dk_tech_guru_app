@@ -13,6 +13,7 @@ import 'package:firebase_core/firebase_core.dart';
 void main() async{
 
   WidgetsFlutterBinding.ensureInitialized();
+  print(DateTime.now().toString());
   /*var variable1;
   print(variable1);*/
 

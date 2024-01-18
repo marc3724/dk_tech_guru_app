@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:intl/intl.dart';
 
 //Warning:(4, 7) This class (or a class that this class inherits from) is marked as '@immutable', but one or more of its instance fields aren't final: ToDoTile.onChanged, ToDoTile.deleteFunction
 class ToDoTile extends StatelessWidget {
@@ -41,7 +42,7 @@ class ToDoTile extends StatelessWidget {
           ],
         ),
         child: Container(
-          padding: EdgeInsets.all(24),
+          padding: EdgeInsets.only(left: 2, right: 15, top: 15, bottom: 15),
           //task decoration
           decoration: BoxDecoration(
             color: Colors.yellow,
@@ -50,7 +51,7 @@ class ToDoTile extends StatelessWidget {
 
           //start of row
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Checkbox(
                 value: taskCompleted,
@@ -83,13 +84,13 @@ class ToDoTile extends StatelessWidget {
                         : TextDecoration.none),
               ),
 
-              /*Text(
-                dueDate.toString(),
+              Text(
+                DateFormat('yyyy-MM-dd').format(dueDate),
                 style: TextStyle(
                     decoration: taskCompleted
                         ? TextDecoration.lineThrough
                         : TextDecoration.none),
-              ),*/
+              ),
             ],
           ),
         ),
