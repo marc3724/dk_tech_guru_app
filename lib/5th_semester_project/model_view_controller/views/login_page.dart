@@ -1,4 +1,4 @@
-/*import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import '../widgets/auth.dart';
 
 class AuthScreen extends StatelessWidget {
@@ -83,5 +83,4 @@ class AuthScreen extends StatelessWidget {
       ),
     );
   }
-
-*/
+}

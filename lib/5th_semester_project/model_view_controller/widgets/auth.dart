@@ -1,4 +1,4 @@
-/*import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Auth {
   //Creating new instance of firebase auth
@@ -39,4 +39,4 @@ class Auth {
       print(e);
     }
   }
-*/
+}
