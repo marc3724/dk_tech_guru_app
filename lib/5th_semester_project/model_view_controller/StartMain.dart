@@ -8,6 +8,7 @@ import 'models/boxes.dart';
 import 'models/task.dart';
 
 void main() async{
+  print(DateTime.now().toString());
   /*var variable1;
   print(variable1);*/
 
