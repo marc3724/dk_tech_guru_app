@@ -66,5 +66,31 @@ class Task {
   set taskPointValue(int value) {
     _taskPointValue = value;
   }
+}
+class task2 {
+
+  String? taskName, taskDescription, dueDate, isDone, doesRepeat;
+  int? taskID, taskPointValue;
+
+  // Contructors
+  void addTask(int taskID, taskPointValue, String taskName, taskDescription, dueDate, isDone, doesRepeat){
+    this.taskID = taskID;
+    this.taskPointValue = taskPointValue;
+    this.taskName = taskName;
+    this.taskDescription = taskDescription;
+    this.dueDate = dueDate;
+    this.isDone = isDone;
+    this.doesRepeat = doesRepeat;
+  }
+
+  // Show the task
+  void showTask(){
+    print('taskPointValue = $taskPointValue');
+    print('taskName = $taskName');
+    print('taskDescription = $taskDescription');
+    print('dueDate = $dueDate');
+    print('isDone = $isDone');
+    print('doesRepeat = $doesRepeat');
+  }
 
 }
