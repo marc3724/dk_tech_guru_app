@@ -3,14 +3,24 @@ import 'dart:io';
 import 'package:dk_tech_guru_app/5th_semester_project/model_view_controller/views/tasks_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import '../../firebase_options.dart';
 import 'Database/task_database.dart';
 import 'models/boxes.dart';
 import 'models/task.dart';
+import 'package:firebase_core/firebase_core.dart';
+
 
 void main() async{
+
+  WidgetsFlutterBinding.ensureInitialized();
   print(DateTime.now().toString());
   /*var variable1;
   print(variable1);*/
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
 
   await Hive.initFlutter();
   ToDoDatabase db = ToDoDatabase();
@@ -51,7 +61,7 @@ class ToDoApp extends StatelessWidget {
   Widget build(BuildContext context) {
     print("here we build ToDoApp");
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false,
       home: TaskPage(),
     );
   }

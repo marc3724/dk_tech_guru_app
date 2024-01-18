@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "767945971880",
+    "project_id": "vikingplanner-c57bd",
+    "storage_bucket": "vikingplanner-c57bd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:767945971880:android:ad55987abd00e893900a9d",
+        "android_client_info": {
+          "package_name": "com.example.dk_tech_guru_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVwgQGI45WWNKBeOlE6ra2naQzOg78HJA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
