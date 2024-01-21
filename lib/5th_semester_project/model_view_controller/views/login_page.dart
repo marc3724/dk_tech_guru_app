@@ -1,15 +1,27 @@
 import 'package:flutter/material.dart';
 import '../widgets/auth.dart';
 
-class AuthScreen extends StatelessWidget {
+class AuthScreen extends StatefulWidget {
+  @override
+  State<AuthScreen> createState() => _AuthScreenState();
+}
+
+class _AuthScreenState extends State<AuthScreen> {
   //Use this check if it's login or register
-  final bool _isLogin = false;
+  bool _showLoginPage = false;
+
+  void togglePages(){
+    setState(() {
+      _showLoginPage = !_showLoginPage;
+    });
+  }
 
   //Use this form key to validate user's input
   final _formKey = GlobalKey<FormState>();
 
   //Use this to store user inputs
   final TextEditingController _emailController = TextEditingController();
+
   final TextEditingController _passwordController = TextEditingController();
 
   handleSubmit() async {
@@ -19,7 +31,7 @@ class AuthScreen extends StatelessWidget {
       final email = _emailController.value.text;
       final password = _passwordController.value.text;
       //Check if is login or register
-      if(_isLogin) {
+      if(_showLoginPage) {
         await Auth().signInWithEmailAndPassword(email, password);
       } else {
         await Auth().registerWithEmailAndPassword(email, password);
@@ -29,6 +41,16 @@ class AuthScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+/*
+    if(_showLoginPage){
+      return LoginPage(onTap: togglePages);
+    }
+    else{
+      return RegisterPage(onTap: togglePages);
+    }
+*/
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Auth Screen'),
@@ -75,7 +97,7 @@ class AuthScreen extends StatelessWidget {
                 //Assigned onPressed to submit
                 onPressed: handleSubmit,
                 //Conditionally show the button label
-                child: Text(_isLogin ? 'Login' :'Register'),
+                child: Text(_showLoginPage ? 'Login' :'Register'),
               ),
             ],
           ),
