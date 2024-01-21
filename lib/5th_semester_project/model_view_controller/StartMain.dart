@@ -1,6 +1,9 @@
 import 'dart:io';
 
+import 'package:dk_tech_guru_app/5th_semester_project/model_view_controller/views/homescreen.dart';
+import 'package:dk_tech_guru_app/5th_semester_project/model_view_controller/views/login_page.dart';
 import 'package:dk_tech_guru_app/5th_semester_project/model_view_controller/views/tasks_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import '../../firebase_options.dart';
@@ -59,10 +62,31 @@ class ToDoApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter X Firebase',
+      home: StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          //user is logged in
+          if (snapshot.hasData) {
+            return HomeScreen();
+          //user is NOT LOGGED in
+          } else {
+            return AuthScreen();
+          }
+        },
+      ),
+    );
+  }
+
+  /*
+  @override
+  Widget build(BuildContext context) {
     print("here we build ToDoApp");
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: TaskPage(),
     );
-  }
+  }*/
 }
