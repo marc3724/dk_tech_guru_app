@@ -1,9 +1,9 @@
 class Group_Members {
   int membersId;
-  String membersname;
+  String membersName;
 
   Group_Members({
     required this.membersId,
-    required this.membersname
+    required this.membersName
   });
 }

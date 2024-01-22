@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import '../widgets/auth.dart';
+import '../Auth/authenticater.dart';
 
-class AuthScreen extends StatefulWidget {
+class LoginAndRegister extends StatefulWidget {
   @override
-  State<AuthScreen> createState() => _AuthScreenState();
+  State<LoginAndRegister> createState() => _LoginAndRegisterState();
 }
 
-class _AuthScreenState extends State<AuthScreen> {
+class _LoginAndRegisterState extends State<LoginAndRegister> {
   //Use this check if it's login or register
   bool _showLoginPage = false;
 
-  void togglePages(){
+  void togglePages() {
     setState(() {
       _showLoginPage = !_showLoginPage;
     });
@@ -31,7 +31,7 @@ class _AuthScreenState extends State<AuthScreen> {
       final email = _emailController.value.text;
       final password = _passwordController.value.text;
       //Check if is login or register
-      if(_showLoginPage) {
+      if (_showLoginPage) {
         await Auth().signInWithEmailAndPassword(email, password);
       } else {
         await Auth().registerWithEmailAndPassword(email, password);
@@ -41,7 +41,6 @@ class _AuthScreenState extends State<AuthScreen> {
 
   @override
   Widget build(BuildContext context) {
-
 /*
     if(_showLoginPage){
       return LoginPage(onTap: togglePages);
@@ -55,53 +54,66 @@ class _AuthScreenState extends State<AuthScreen> {
       appBar: AppBar(
         title: Text('Auth Screen'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          //Add form to key to the Form Widget
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextFormField(
-                //Assign controller
-                controller:_emailController,
-                //Use this function to validate user input
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
-                  hintText: 'Email',
-                ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Form(
+              //Add form to key to the Form Widget
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextFormField(
+                    //Assign controller
+                    controller: _emailController,
+                    //Use this function to validate user input
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your email';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      hintText: 'Email',
+                    ),
+                  ),
+                  TextFormField(
+                    //Assign controller
+                    controller: _passwordController,
+                    obscureText: true,
+                    //Use this function to validate user
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your password';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      hintText: 'Password',
+                    ),
+                  ),
+                  SizedBox(height: 16.0),
+                  Row(
+                    children: [
+                      ElevatedButton(
+                        //Assigned onPressed to submit
+                        onPressed: handleSubmit,
+                        //Conditionally show the button label
+                        child: Text(_showLoginPage ? 'Login' : 'Register'),
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            togglePages();
+                          },
+                          child: Text("switch"))
+                    ],
+                  ),
+                ],
               ),
-              TextFormField(
-                //Assign controller
-                controller:_passwordController,
-                obscureText: true,
-                //Use this function to validate user
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your password';
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
-                  hintText: 'Password',
-                ),
-              ),
-              SizedBox(height: 16.0),
-              ElevatedButton(
-                //Assigned onPressed to submit
-                onPressed: handleSubmit,
-                //Conditionally show the button label
-                child: Text(_showLoginPage ? 'Login' :'Register'),
-              ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

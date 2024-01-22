@@ -51,7 +51,7 @@ class ToDoTile extends StatelessWidget {
 
           //start of row
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Checkbox(
                 value: taskCompleted,

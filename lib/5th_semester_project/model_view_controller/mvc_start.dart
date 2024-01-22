@@ -56,8 +56,8 @@ void main() {
     // Your code here
   }
 
-  Group_Members user1 = Group_Members(membersId: 1, membersname: 'User1');
-  Group_Members user2 = Group_Members(membersId: 2, membersname: 'User2');
+  Group_Members user1 = Group_Members(membersId: 1, membersName: 'User1');
+  Group_Members user2 = Group_Members(membersId: 2, membersName: 'User2');
 
   group group1 = group(groupId: 1, groupName: 'group A');
   group group2 = group(groupId: 2, groupName: 'group b');
@@ -74,8 +74,8 @@ void main() {
 
   // Print group information
 
-  print('GroupA Members: ${group1.members.map((user) => user.membersname)}');
-  print('GroupB Members: ${group2.members.map((user) => user.membersname)}');
+  print('GroupA Members: ${group1.members.map((user) => user.membersName)}');
+  print('GroupB Members: ${group2.members.map((user) => user.membersName)}');
 
 
 
