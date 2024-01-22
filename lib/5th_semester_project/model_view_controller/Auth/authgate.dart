@@ -1,8 +1,7 @@
-/*import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:dk_tech_guru_app/5th_semester_project/model_view_controller/views/login_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import 'home_page.dart';
+import '../views/home_page.dart';
 
 class AuthGate extends StatelessWidget {
   const AuthGate({super.key});
@@ -20,10 +19,10 @@ class AuthGate extends StatelessWidget {
 
             //user is NOT logged int
             else{
-              return const LoginOrRegister();
+              return LoginAndRegister();
             }
           }
       ),
     );
   }
-}*/
+}

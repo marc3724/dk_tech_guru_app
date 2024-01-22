@@ -16,7 +16,9 @@ class TaskController {
   and sent over
   }
   */
-  void createTask(
+
+
+  /*void createTask(
       int taskID,
       int taskPointValue,
       String taskName,
@@ -34,6 +36,24 @@ class TaskController {
         isDone,
         doesRepeat);
     _database.addTask(task);
+  }*/
+  Task createTask(
+      int taskID,
+      int taskPointValue,
+      String taskName,
+      String taskDescription,
+      DateTime dueDate,
+      bool isDone,
+      bool doesRepeat
+      )  {
+    return Task (
+        taskID,
+        taskPointValue,
+        taskName,
+        taskDescription,
+        dueDate,
+        isDone,
+        doesRepeat);
   }
 
   //fix {}

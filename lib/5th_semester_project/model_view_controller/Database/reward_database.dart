@@ -1,7 +1,7 @@
 import 'package:dk_tech_guru_app/5th_semester_project/model_view_controller/models/rewards.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-class ToDoDatabase {
+class RewardDatabase {
   List<Reward> myRewardList = [];
 
   final _myBox = Hive.box("myBox");
