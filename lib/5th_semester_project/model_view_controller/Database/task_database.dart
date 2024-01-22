@@ -7,8 +7,10 @@ class ToDoDatabase {
 
   Future<void> initializeDatabase() async {
     if (Hive.isBoxOpen('myBox') == false) {
-      print("box has been opened");
+      print("box was not open");
       boxTasks = await Hive.openBox<Task>('myBox');
+      print("box has been opened");
+
     } else {
       print("box was already open");
       boxTasks = Hive.box<Task>('myBox');

@@ -77,6 +77,4 @@ void main() {
   print('GroupA Members: ${group1.members.map((user) => user.membersName)}');
   print('GroupB Members: ${group2.members.map((user) => user.membersName)}');
 
-
-
 }
