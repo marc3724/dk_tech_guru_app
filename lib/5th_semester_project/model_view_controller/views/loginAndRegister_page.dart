@@ -10,12 +10,6 @@ class _LoginAndRegisterState extends State<LoginAndRegister> {
   //Use this check if it's login or register
   bool _showLoginPage = false;
 
-  void togglePages() {
-    setState(() {
-      _showLoginPage = !_showLoginPage;
-    });
-  }
-
   //Use this form key to validate user's input
   final _formKey = GlobalKey<FormState>();
 
@@ -23,6 +17,12 @@ class _LoginAndRegisterState extends State<LoginAndRegister> {
   final TextEditingController _emailController = TextEditingController();
 
   final TextEditingController _passwordController = TextEditingController();
+
+  void togglePages() {
+    setState(() {
+      _showLoginPage = !_showLoginPage;
+    });
+  }
 
   handleSubmit() async {
     //Validate user inputs using formkey
@@ -41,15 +41,6 @@ class _LoginAndRegisterState extends State<LoginAndRegister> {
 
   @override
   Widget build(BuildContext context) {
-/*
-    if(_showLoginPage){
-      return LoginPage(onTap: togglePages);
-    }
-    else{
-      return RegisterPage(onTap: togglePages);
-    }
-*/
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Auth Screen'),
